@@ -6,7 +6,7 @@ using TestForOnlyOffice.Model;
 
 namespace TestForOnlyOffice.Interfaces
 {
-    public interface IPersonManager : IDisposable
+    public interface IPersonManager
     {
         IEnumerable<Person> GetPersonList();
         Person GetPerson(int? id);

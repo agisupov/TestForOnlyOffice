@@ -12,7 +12,6 @@ namespace TestForOnlyOffice.Classes
     public class DbPersonManager : IPersonManager
     {
         ApplicationDbContext _db;
-        private bool disposed = false;
 
         public DbPersonManager(ApplicationDbContext db)
         {
