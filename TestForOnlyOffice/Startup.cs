@@ -28,7 +28,8 @@ namespace TestForOnlyOffice
         {
             services.AddDbContext<ApplicationDbContext>();
             services.AddMvc();
-            services.AddScoped<IPersonManager, DbPersonManager>();
+            //services.AddScoped<IPersonManager, DbPersonManager>();
+            services.AddScoped<IPersonManager, FilePersonManager>();
             services.AddRazorPages();
             services.AddAntiforgery(o => o.HeaderName = "CSRF-TOKEN");
         }

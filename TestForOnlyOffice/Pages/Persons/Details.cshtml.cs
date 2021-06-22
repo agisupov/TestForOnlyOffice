@@ -19,7 +19,7 @@ namespace TestForOnlyOffice.Pages.Persons
 
         public Person Person { get; set; }
 
-        public IActionResult OnGet(int? id)
+        public IActionResult OnGet(string id)
         {
             if (id == null)
             {

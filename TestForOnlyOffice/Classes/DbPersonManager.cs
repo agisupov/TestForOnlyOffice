@@ -20,37 +20,45 @@ namespace TestForOnlyOffice.Classes
 
         public void Create(Person person)
         {
+            person.PersonId = Guid.NewGuid().ToString();
             _db.Person.Add(person);
+            _db.SaveChanges();
         }
 
-        public void Delete(int id)
+        public void Delete(string id)
         {
             Person person = _db.Person.Find(id);
             if (person != null)
+            {
                 _db.Person.Remove(person);
+                _db.SaveChanges();
+            }
         }
 
-        public Person GetPerson(int? id)
+        public Person GetPerson(string id)
         {
             return _db.Person.Find(id);
         }
 
-        public IEnumerable<Person> GetPersonList()
+        public List<Person> GetPersonList()
         {
-            return _db.Person;
-        }
-
-        public void Save()
-        {
-            _db.SaveChanges();
+            return _db.Person.ToList();
         }
 
         public void Update(Person person)
         {
-            _db.Entry(person).State = EntityState.Modified;
+            var record = _db.Person.First(x => x.PersonId == person.PersonId);
+            if (record != null)
+            {
+                record.FirstName = person.FirstName;
+                record.LastName = person.LastName;
+                record.Email = person.Email;
+                record.Password = person.Password;
+                _db.SaveChanges();
+            }
         }
 
-        public bool PersonExists(int? id)
+        public bool PersonExists(string id)
         {
             return _db.Person.Any(x => x.PersonId == id);
         }

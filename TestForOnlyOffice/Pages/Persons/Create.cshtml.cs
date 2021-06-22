@@ -31,7 +31,6 @@ namespace TestForOnlyOffice.Pages.Persons
             }
 
             _personManager.Create(Person);
-            _personManager.Save();
 
             return RedirectToPage("./Index");
         }

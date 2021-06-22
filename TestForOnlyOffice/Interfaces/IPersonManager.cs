@@ -8,12 +8,11 @@ namespace TestForOnlyOffice.Interfaces
 {
     public interface IPersonManager
     {
-        IEnumerable<Person> GetPersonList();
-        Person GetPerson(int? id);
-        bool PersonExists(int? id);
+        List<Person> GetPersonList();
+        Person GetPerson(string id);
+        bool PersonExists(string id);
         void Create(Person person);
         void Update(Person person);
-        void Delete(int id);
-        void Save();
+        void Delete(string id);
     }
 }

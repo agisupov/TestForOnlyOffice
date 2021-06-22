@@ -17,7 +17,7 @@ namespace TestForOnlyOffice.Pages.Persons
         [BindProperty]
         public Person Person { get; set; }
 
-        public IActionResult OnGet(int? id)
+        public IActionResult OnGet(string id)
         {
             if (id == null)
             {
@@ -33,7 +33,7 @@ namespace TestForOnlyOffice.Pages.Persons
             return Page();
         }
 
-        public IActionResult OnPost(int? id)
+        public IActionResult OnPost(string id)
         {
             if (id == null)
             {
@@ -45,7 +45,6 @@ namespace TestForOnlyOffice.Pages.Persons
             if (Person != null)
             {
                 _personManager.Delete(Person.PersonId);
-                _personManager.Save();
             }
 
             return RedirectToPage("./Index");
