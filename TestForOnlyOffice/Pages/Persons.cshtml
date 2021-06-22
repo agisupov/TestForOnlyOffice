@@ -1,0 +1,77 @@
+﻿@page
+@model PersonsModel
+@{
+    ViewData["Title"] = "Люди";
+}
+<h1>@ViewData["Title"]</h1>
+
+<br />
+<h2 class="text-info">Добавление данных</h2>
+<br />
+
+<div class="border container" style="padding:10px;">
+    <form method="post">
+        <div class="text-danger" asp-asp-validation-summary="ModelOnly"></div>
+        <div class="form-group row">
+            <div class="col-2">
+                Имя
+            </div>
+            <div class="col-4">
+                <input asp-for="Person.FirstName" class="form-control">
+            </div>
+            <span asp-validation-for="Person.FirstName" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                Фамилия
+            </div>
+            <div class="col-4">
+                <input asp-for="Person.LastName" class="form-control">
+            </div>
+            <span asp-validation-for="Person.LastName" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-4 offset-2">
+                <input type="submit" value="Добавить запись в базу" class="btn btn-primary form-control" />
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="border container" style="padding:10px;">
+    <form method="post">
+        @if (Model.Persons.Count() > 0)
+        {
+        <table class="table table-stripped border">
+            <tr class="table-secondary">
+                <th>
+                    Имя
+                </th>
+                <th>
+                    Фамилия
+                </th>
+            </tr>
+            @foreach (var item in Model.Persons)
+                {
+            <tr>
+                <td>
+                    @Html.DisplayFor(m => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => item.LastName)
+                </td>
+            </tr>
+                }
+        </table>
+        }
+        else
+        {
+        <p>No persons available. Sorry :(</p>
+        }
+    </form>
+</div>
+
+@section Scripts{
+    <script src="~/js/site.js"></script>
+    <partial name="_ValidationScriptsPartial" />
+}
