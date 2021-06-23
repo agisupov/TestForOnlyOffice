@@ -24,9 +24,9 @@ namespace TestForOnlyOffice.Pages.Persons
         [BindProperty]
         public Person Person { get; set; }
 
-        public IActionResult OnGet(string id)
+        public IActionResult OnGet(Guid id)
         {
-            if (id == null)
+            if (id == Guid.Empty)
             {
                 return NotFound();
             }
@@ -48,7 +48,22 @@ namespace TestForOnlyOffice.Pages.Persons
             {
                 return Page();
             }
-            _personManager.Update(Person);
+
+            try
+            {
+                Person = _personManager.Update(Person);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!_personManager.PersonExists(Person.PersonId))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
             return RedirectToPage("./Index");
         }
     }

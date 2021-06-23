@@ -21,13 +21,12 @@ namespace TestForOnlyOffice.Classes
 
         public void Create(Person person)
         {
-            person.PersonId = Guid.NewGuid().ToString();
             _personList.Add(person);
             string jsonStr = JsonSerializer.Serialize(_personList);
             File.WriteAllText("person.json", jsonStr);
         }
 
-        public void Delete(string id)
+        public void Delete(Guid id)
         {
             Person person = _personList.FirstOrDefault(x => x.PersonId == id);
             if (person != null)
@@ -38,7 +37,7 @@ namespace TestForOnlyOffice.Classes
             File.WriteAllText("person.json", jsonStr);
         }
 
-        public Person GetPerson(string id)
+        public Person GetPerson(Guid id)
         {
             return _personList.FirstOrDefault(x => x.PersonId == id);
         }
@@ -50,15 +49,16 @@ namespace TestForOnlyOffice.Classes
             return personList;
         }
 
-        public bool PersonExists(string id)
+        public bool PersonExists(Guid id)
         {
             return _personList.Any(x => x.PersonId == id);
         }
 
-        public void Update(Person person)
+        public Person Update(Person person)
         {
             string jsonStr = File.ReadAllText("person.json");
             _personList = JsonSerializer.Deserialize<IEnumerable<Person>>(jsonStr).ToList();
+            var recordPerson = new Person();
             foreach (var record in _personList)
             {
                 if (record.PersonId == person.PersonId)
@@ -67,10 +67,12 @@ namespace TestForOnlyOffice.Classes
                     record.LastName = person.LastName;
                     record.Email = person.Email;
                     record.Password = record.Password;
+                    recordPerson = record;
                 }
             }
             jsonStr = JsonSerializer.Serialize(_personList);
             File.WriteAllText("person.json", jsonStr);
+            return recordPerson;
         }
     }
 }

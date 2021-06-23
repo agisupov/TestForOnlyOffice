@@ -10,8 +10,9 @@ namespace TestForOnlyOffice.Model
 {
     public class Person
     {
+        [Key]
         [JsonPropertyName("personId")]
-        public string PersonId { get; set; } //string, чтобы мог использовать Guid, с int не получается
+        public Guid PersonId { get; set; }
 
         [JsonPropertyName("first_name")]
         [Required(ErrorMessage = "Не указано имя")]

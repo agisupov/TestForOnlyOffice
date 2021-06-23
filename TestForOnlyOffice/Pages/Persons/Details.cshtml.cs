@@ -19,9 +19,9 @@ namespace TestForOnlyOffice.Pages.Persons
 
         public Person Person { get; set; }
 
-        public IActionResult OnGet(string id)
+        public IActionResult OnGet(Guid id)
         {
-            if (id == null)
+            if (id == Guid.Empty)
             {
                 return NotFound();
             }

@@ -20,6 +20,8 @@ namespace TestForOnlyOffice.Data
         {
             modelBuilder.Entity<Person>().Property(b => b.FirstName).IsRequired();
             modelBuilder.Entity<Person>().Property(b => b.LastName).IsRequired();
+            modelBuilder.Entity<Person>().Property(b => b.Email).IsRequired();
+            modelBuilder.Entity<Person>().Property(b => b.Password).IsRequired();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

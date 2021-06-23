@@ -20,12 +20,11 @@ namespace TestForOnlyOffice.Classes
 
         public void Create(Person person)
         {
-            person.PersonId = Guid.NewGuid().ToString();
             _db.Person.Add(person);
             _db.SaveChanges();
         }
 
-        public void Delete(string id)
+        public void Delete(Guid id)
         {
             Person person = _db.Person.Find(id);
             if (person != null)
@@ -35,7 +34,7 @@ namespace TestForOnlyOffice.Classes
             }
         }
 
-        public Person GetPerson(string id)
+        public Person GetPerson(Guid id)
         {
             return _db.Person.Find(id);
         }
@@ -45,7 +44,7 @@ namespace TestForOnlyOffice.Classes
             return _db.Person.ToList();
         }
 
-        public void Update(Person person)
+        public Person Update(Person person)
         {
             var record = _db.Person.First(x => x.PersonId == person.PersonId);
             if (record != null)
@@ -56,9 +55,10 @@ namespace TestForOnlyOffice.Classes
                 record.Password = person.Password;
                 _db.SaveChanges();
             }
+            return record;
         }
 
-        public bool PersonExists(string id)
+        public bool PersonExists(Guid id)
         {
             return _db.Person.Any(x => x.PersonId == id);
         }

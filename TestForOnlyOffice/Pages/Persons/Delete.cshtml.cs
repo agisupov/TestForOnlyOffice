@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using System;
 using TestForOnlyOffice.Interfaces;
 using TestForOnlyOffice.Model;
 
@@ -17,9 +19,9 @@ namespace TestForOnlyOffice.Pages.Persons
         [BindProperty]
         public Person Person { get; set; }
 
-        public IActionResult OnGet(string id)
+        public IActionResult OnGet(Guid id)
         {
-            if (id == null)
+            if (id == Guid.Empty)
             {
                 return NotFound();
             }
@@ -33,9 +35,9 @@ namespace TestForOnlyOffice.Pages.Persons
             return Page();
         }
 
-        public IActionResult OnPost(string id)
+        public IActionResult OnPost(Guid id)
         {
-            if (id == null)
+            if (id == Guid.Empty)
             {
                 return NotFound();
             }
@@ -44,7 +46,21 @@ namespace TestForOnlyOffice.Pages.Persons
 
             if (Person != null)
             {
-                _personManager.Delete(Person.PersonId);
+                try
+                {
+                    _personManager.Delete(Person.PersonId);
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!_personManager.PersonExists(Person.PersonId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
             }
 
             return RedirectToPage("./Index");
