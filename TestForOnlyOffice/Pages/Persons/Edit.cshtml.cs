@@ -49,21 +49,13 @@ namespace TestForOnlyOffice.Pages.Persons
                 return Page();
             }
 
-            try
+            Person = _personManager.Update(Person);
+
+            if (Person == null)
             {
-                Person = _personManager.Update(Person);
+                return NotFound();
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!_personManager.PersonExists(Person.PersonId))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+
             return RedirectToPage("./Index");
         }
     }

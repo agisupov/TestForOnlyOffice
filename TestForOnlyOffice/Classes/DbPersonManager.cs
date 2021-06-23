@@ -46,7 +46,7 @@ namespace TestForOnlyOffice.Classes
 
         public Person Update(Person person)
         {
-            var record = _db.Person.First(x => x.PersonId == person.PersonId);
+            var record = _db.Person.FirstOrDefault(x => x.PersonId == person.PersonId);
             if (record != null)
             {
                 record.FirstName = person.FirstName;
@@ -56,11 +56,6 @@ namespace TestForOnlyOffice.Classes
                 _db.SaveChanges();
             }
             return record;
-        }
-
-        public bool PersonExists(Guid id)
-        {
-            return _db.Person.Any(x => x.PersonId == id);
         }
     }
 }

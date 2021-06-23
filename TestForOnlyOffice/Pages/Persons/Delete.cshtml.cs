@@ -44,24 +44,12 @@ namespace TestForOnlyOffice.Pages.Persons
 
             Person = _personManager.GetPerson(id);
 
-            if (Person != null)
+            if (Person == null)
             {
-                try
-                {
-                    _personManager.Delete(Person.PersonId);
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!_personManager.PersonExists(Person.PersonId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                return NotFound();
             }
+
+            _personManager.Delete(Person.PersonId);
 
             return RedirectToPage("./Index");
         }

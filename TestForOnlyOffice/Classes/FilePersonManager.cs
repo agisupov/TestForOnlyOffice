@@ -49,11 +49,6 @@ namespace TestForOnlyOffice.Classes
             return personList;
         }
 
-        public bool PersonExists(Guid id)
-        {
-            return _personList.Any(x => x.PersonId == id);
-        }
-
         public Person Update(Person person)
         {
             string jsonStr = File.ReadAllText("person.json");

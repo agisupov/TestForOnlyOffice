@@ -10,7 +10,6 @@ namespace TestForOnlyOffice.Interfaces
     {
         List<Person> GetPersonList();
         Person GetPerson(Guid id);
-        bool PersonExists(Guid id);
         void Create(Person person);
         Person Update(Person person);
         void Delete(Guid id);
