@@ -16,6 +16,11 @@ namespace TestForOnlyOffice.Data
             Database.EnsureCreated();
         }
 
+        public ApplicationDbContext(DbContextOptions options) : base(options)
+        {
+
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Person>().Property(b => b.FirstName).IsRequired();
@@ -30,6 +35,11 @@ namespace TestForOnlyOffice.Data
                 "server=localhost;port=3306;user=root;password=Wki4bJCC5CsQtpl5PV;database=testdb;",
                 new MySqlServerVersion(new Version(8, 0, 25))
             );
+        }
+
+        public void Migrate()
+        {
+            Database.Migrate();
         }
     }
 }

@@ -21,6 +21,7 @@ namespace TestForOnlyOffice.Classes
 
         public void Create(Person person)
         {
+            _personList = GetPersonList();
             _personList.Add(person);
             string jsonStr = JsonSerializer.Serialize(_personList);
             File.WriteAllText("person.json", jsonStr);
@@ -51,8 +52,7 @@ namespace TestForOnlyOffice.Classes
 
         public Person Update(Person person)
         {
-            string jsonStr = File.ReadAllText("person.json");
-            _personList = JsonSerializer.Deserialize<IEnumerable<Person>>(jsonStr).ToList();
+            _personList = GetPersonList();
             var recordPerson = new Person();
             foreach (var record in _personList)
             {
@@ -65,7 +65,7 @@ namespace TestForOnlyOffice.Classes
                     recordPerson = record;
                 }
             }
-            jsonStr = JsonSerializer.Serialize(_personList);
+            var jsonStr = JsonSerializer.Serialize(_personList);
             File.WriteAllText("person.json", jsonStr);
             return recordPerson;
         }
