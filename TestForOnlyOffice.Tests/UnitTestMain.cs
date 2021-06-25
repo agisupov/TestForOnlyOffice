@@ -35,7 +35,7 @@ namespace TestForOnlyOffice.Tests
         [OneTimeTearDown]
         public virtual void DropDb()
         {
-            var context = Scope.ServiceProvider.GetService<ApplicationDbContext>();
+            var context = Scope.ServiceProvider.GetService<TestDbContext>();
             context.Database.EnsureDeleted();
         }
 
@@ -49,7 +49,7 @@ namespace TestForOnlyOffice.Tests
                 configuration["testAssembly"] = testAssembly;
             }
 
-            using var db = scope.ServiceProvider.GetService<ApplicationDbContext>();
+            using var db = scope.ServiceProvider.GetService<TestDbContext>();
             db.Migrate();
         }
     }

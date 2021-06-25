@@ -7,16 +7,16 @@ using TestForOnlyOffice.Model;
 
 namespace TestForOnlyOffice.Data
 {
-    public class ApplicationDbContext : BaseDbContext
+    public class TestDbContext : BaseDbContext
     {
         public DbSet<Person> Person { get; set; }
 
-        public ApplicationDbContext()
+        public TestDbContext()
         {
             Database.EnsureCreated();
         }
 
-        public ApplicationDbContext(DbContextOptions options) : base(options)
+        public TestDbContext(DbContextOptions options) : base(options)
         {
 
         }
@@ -32,7 +32,7 @@ namespace TestForOnlyOffice.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseMySql(
-                "server=localhost;port=3306;user=root;password=Wki4bJCC5CsQtpl5PV;database=testdb;",
+                "server=localhost;port=3306;user=root;password=Wki4bJCC5CsQtpl5PV;database=testdb_test;",
                 new MySqlServerVersion(new Version(8, 0, 25))
             );
         }

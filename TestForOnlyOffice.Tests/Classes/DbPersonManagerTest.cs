@@ -17,7 +17,7 @@ namespace TestForOnlyOffice.Tests.Classes
     public class DbPersonManagerTest : MySetUpDbClass
     {
         public readonly IPersonManager _mockPersonManager;
-        public ApplicationDbContext _db;
+        public TestDbContext _db;
 
         public TestContext TestContext { get; set; }
 
@@ -59,9 +59,9 @@ namespace TestForOnlyOffice.Tests.Classes
 
         public DbPersonManagerTest()
         {
-            //_db = new ApplicationDbContext();
-            //_db.Person.AddRange(_personsList);
-            //_db.SaveChanges();
+            _db = new TestDbContext();
+            _db.AddRange(_personsList);
+            _db.SaveChanges();
             Mock<IPersonManager> mockPersonManager = new Mock<IPersonManager>();
             mockPersonManager.Setup(x => x.Create(It.IsAny<Person>()));
             mockPersonManager.Setup(x => x.GetPersonList()).Returns(_personsList);
@@ -74,6 +74,18 @@ namespace TestForOnlyOffice.Tests.Classes
             mockPersonManager.Setup(x => x.Delete(It.IsAny<Guid>()));
 
             _mockPersonManager = mockPersonManager.Object;
+        }
+
+        [OneTimeSetUp]
+        public override void CreateDb()
+        {
+            base.CreateDb();
+        }
+
+        [OneTimeTearDown]
+        public override void DropDb()
+        {
+            base.DropDb();
         }
 
         [Test]

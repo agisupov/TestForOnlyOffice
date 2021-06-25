@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace TestForOnlyOffice.Migrations
+namespace TestForOnlyOffice.Migrations.TestDb
 {
-    public partial class First : Migration
+    public partial class First11 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
