@@ -29,10 +29,10 @@ namespace TestForOnlyOffice.Classes
 
         public void Delete(Guid id)
         {
-            Person person = _personList.FirstOrDefault(x => x.PersonId == id);
+            Person person = _personList.FirstOrDefault(x => x.Id == id);
             if (person != null)
             {
-                _personList.ToList().Remove(person);
+                _personList.Remove(person);
             }
             string jsonStr = JsonSerializer.Serialize(_personList);
             File.WriteAllText("person.json", jsonStr);
@@ -40,7 +40,9 @@ namespace TestForOnlyOffice.Classes
 
         public Person GetPerson(Guid id)
         {
-            return _personList.FirstOrDefault(x => x.PersonId == id);
+            string jsonStr = File.ReadAllText("person.json");
+            var personList = JsonSerializer.Deserialize<IEnumerable<Person>>(jsonStr).ToList();
+            return personList.FirstOrDefault(x => x.Id == id);
         }
 
         public List<Person> GetPersonList()
@@ -56,7 +58,7 @@ namespace TestForOnlyOffice.Classes
             var recordPerson = new Person();
             foreach (var record in _personList)
             {
-                if (record.PersonId == person.PersonId)
+                if (record.Id == person.Id)
                 {
                     record.FirstName = person.FirstName;
                     record.LastName = person.LastName;

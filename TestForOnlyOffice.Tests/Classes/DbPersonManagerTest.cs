@@ -14,142 +14,54 @@ using TestForOnlyOffice.Model;
 namespace TestForOnlyOffice.Tests.Classes
 {
     [TestFixture]
-    public class DbPersonManagerTest : MySetUpDbClass
+    public class DbPersonManagerTest : PersonManagerTest
     {
-        public readonly IPersonManager _mockPersonManager;
-        public TestDbContext _db;
-
-        public TestContext TestContext { get; set; }
-
-        List<Person> _personsList = new List<Person>
-            {
-                new Person
-                {
-                    PersonId = new Guid("f9278c77-4a5c-407b-95db-2d8736f2cd6c"),
-                    FirstName = "Alex",
-                    LastName = "Mokhov",
-                    Email = "alexmokhov@ya.ru",
-                    Password = "123456"
-                },
-                new Person
-                {
-                    PersonId = new Guid("1f8e9a51-f987-4c06-b115-f031d8f941f0"),
-                    FirstName = "Vladimir",
-                    LastName = "Mukhin",
-                    Email = "mukhiv@ya.ru",
-                    Password = "123456"
-                },
-                new Person
-                {
-                    PersonId = new Guid("1f459835-ea0e-4047-b7a5-250ee512d691"),
-                    FirstName = "Max",
-                    LastName = "Novikov",
-                    Email = "novikov@ya.ru",
-                    Password = "123456"
-                },
-                new Person
-                {
-                    PersonId = new Guid("963fea18-f18e-48da-967a-012c8ce6c06a"),
-                    FirstName = "Ivan",
-                    LastName = "Ivanov",
-                    Email = "ivanoff@ya.ru",
-                    Password = "123456"
-                }
-            };
-
-        public DbPersonManagerTest()
-        {
-            _db = new TestDbContext();
-            _db.AddRange(_personsList);
-            _db.SaveChanges();
-            Mock<IPersonManager> mockPersonManager = new Mock<IPersonManager>();
-            mockPersonManager.Setup(x => x.Create(It.IsAny<Person>()));
-            mockPersonManager.Setup(x => x.GetPersonList()).Returns(_personsList);
-            mockPersonManager.Setup(x => x.GetPerson(It.IsAny<Guid>()))
-                .Returns((Guid guid) => _db.Person.FirstOrDefault(z => guid.Equals(z.PersonId)));
-
-            mockPersonManager.Setup(x => x.Update(It.IsAny<Person>()))
-                .Returns((Person person) => _db.Person.FirstOrDefault(z => person.PersonId.Equals(z.PersonId)));
-
-            mockPersonManager.Setup(x => x.Delete(It.IsAny<Guid>()));
-
-            _mockPersonManager = mockPersonManager.Object;
-        }
+        public ApplicationDbContext DbContext = new ApplicationDbContext();
 
         [OneTimeSetUp]
-        public override void CreateDb()
+        public virtual void CreateDb()
         {
-            base.CreateDb();
+            DbContext.Database.EnsureCreated();
+            _personManager = new DbPersonManager(DbContext);
         }
 
         [OneTimeTearDown]
-        public override void DropDb()
+        public virtual void DropDb()
         {
-            base.DropDb();
+            DbContext.Database.EnsureDeleted();
         }
 
         [Test]
-        [Order(1)]
-        public void GetPersonTest()
+        public override void CreatePersonTest()
         {
-            var id = _personsList[2].PersonId;
-            Person person = _mockPersonManager.GetPerson(id);
-
-            Assert.NotNull(person);
-            Assert.AreEqual("Novikov", person.LastName);
+            base.CreatePersonTest();
         }
 
         [Test]
-        [Order(2)]
-        public void CreatePersonTest()
+        [TestCaseSource(nameof(_guidForDelete))]
+        public override void DeletePersonTest(Guid id)
         {
-            Person person = new Person
-            {
-                PersonId = new Guid("858f7f23-0dc5-43be-81a7-90fe835fa954"),
-                FirstName = "Timofei",
-                LastName = "Moskvin",
-                Email = "moskvin@ya.ru",
-                Password = "123456"
-            };
-
-            _mockPersonManager.Create(person);
-            person = _mockPersonManager.GetPerson(person.PersonId);
-
-            Assert.IsNotNull(person);
+            base.DeletePersonTest(id);
         }
 
         [Test]
-        [Order(3)]
-        public void UpdatePersonTest()
+        public override void GetPersonListTest()
         {
-            var id = new Guid("1f8e9a51-f987-4c06-b115-f031d8f941f0");
-            Person person = _mockPersonManager.GetPerson(id);
-            Assert.NotNull(person);
-
-            person.LastName = "Pamann";
-            person = _mockPersonManager.Update(person);
-
-            Assert.NotNull(person);
-            Assert.AreEqual("Pamann", person.LastName);
+            base.GetPersonListTest();
         }
 
         [Test]
-        [Order(4)]
-        public void GetPersonListTest()
+        [TestCaseSource(nameof(_guidForGetPerson))]
+        public override void GetPersonTest(Guid id)
         {
-            List<Person> personsList = _mockPersonManager.GetPersonList();
-            Assert.IsNotNull(personsList);
-            Assert.AreEqual(4, personsList.Count);
+            base.GetPersonTest(id);
         }
 
         [Test]
-        [Order(5)]
-        public void DeletePersonTest()
+        [TestCaseSource(nameof(_person))]
+        public override void UpdatePersonTest(Person person)
         {
-            var id = new Guid("963fea18-f18e-48da-967a-012c8ce6c06a");
-            _mockPersonManager.Delete(id);
-
-            Assert.IsNull(_mockPersonManager.GetPerson(id));
+            base.UpdatePersonTest(person);
         }
     }
 }

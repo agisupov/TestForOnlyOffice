@@ -49,7 +49,7 @@ namespace TestForOnlyOffice.Pages.Persons
                 return NotFound();
             }
 
-            _personManager.Delete(Person.PersonId);
+            _personManager.Delete(Person.Id);
 
             return RedirectToPage("./Index");
         }

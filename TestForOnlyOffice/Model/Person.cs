@@ -11,8 +11,8 @@ namespace TestForOnlyOffice.Model
     public class Person
     {
         [Key]
-        [JsonPropertyName("personId")]
-        public Guid PersonId { get; set; }
+        [JsonPropertyName("id")]
+        public Guid Id { get; set; }
 
         [JsonPropertyName("first_name")]
         [Required(ErrorMessage = "Не указано имя")]

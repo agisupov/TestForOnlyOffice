@@ -27,7 +27,6 @@ namespace TestForOnlyOffice
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>();
-            services.AddDbContext<TestDbContext>();
             services.AddMvc();
             services.AddScoped<IPersonManager, DbPersonManager>();
             //services.AddScoped<IPersonManager, FilePersonManager>();
