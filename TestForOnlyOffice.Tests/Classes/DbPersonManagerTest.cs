@@ -21,7 +21,6 @@ namespace TestForOnlyOffice.Tests.Classes
         [OneTimeSetUp]
         public virtual void CreateDb()
         {
-            DbContext.Database.EnsureCreated();
             _personManager = new DbPersonManager(DbContext);
         }
 

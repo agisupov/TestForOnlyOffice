@@ -15,7 +15,7 @@ namespace TestForOnlyOffice.Data
 
         public ApplicationDbContext()
         {
-
+            Database.EnsureCreated();
         }
 
         public ApplicationDbContext(DbContextOptions options) : base(options)
