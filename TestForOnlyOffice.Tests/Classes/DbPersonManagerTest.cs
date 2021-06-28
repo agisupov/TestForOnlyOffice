@@ -29,38 +29,5 @@ namespace TestForOnlyOffice.Tests.Classes
         {
             DbContext.Database.EnsureDeleted();
         }
-
-        [Test]
-        public override void CreatePersonTest()
-        {
-            base.CreatePersonTest();
-        }
-
-        [Test]
-        [TestCaseSource(nameof(_guidForDelete))]
-        public override void DeletePersonTest(Guid id)
-        {
-            base.DeletePersonTest(id);
-        }
-
-        [Test]
-        public override void GetPersonListTest()
-        {
-            base.GetPersonListTest();
-        }
-
-        [Test]
-        [TestCaseSource(nameof(_guidForGetPerson))]
-        public override void GetPersonTest(Guid id)
-        {
-            base.GetPersonTest(id);
-        }
-
-        [Test]
-        [TestCaseSource(nameof(_person))]
-        public override void UpdatePersonTest(Person person)
-        {
-            base.UpdatePersonTest(person);
-        }
     }
 }

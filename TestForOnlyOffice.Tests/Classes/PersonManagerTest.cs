@@ -32,7 +32,9 @@ namespace TestForOnlyOffice.Tests.Classes
             new Guid("f9278c77-4a5c-407b-95db-2d8736f2cd6c")
         };
 
-        public virtual void GetPersonTest(Guid id)
+        [Test]
+        [TestCaseSource(nameof(_guidForGetPerson))]
+        public void GetPersonTest(Guid id)
         {
             Person person = _personManager.GetPerson(id);
 
@@ -40,7 +42,8 @@ namespace TestForOnlyOffice.Tests.Classes
             Assert.AreEqual("Mokhov", person.LastName);
         }
 
-        public virtual void CreatePersonTest()
+        [Test]
+        public void CreatePersonTest()
         {
             //Arrange
             Person person = new Person()
@@ -59,7 +62,9 @@ namespace TestForOnlyOffice.Tests.Classes
             Assert.NotNull(person);
         }
 
-        public virtual void UpdatePersonTest(Person person)
+        [Test]
+        [TestCaseSource(nameof(_person))]
+        public void UpdatePersonTest(Person person)
         {
             person.LastName = "Nemoskvin";
             _personManager.Update(person);
@@ -67,7 +72,8 @@ namespace TestForOnlyOffice.Tests.Classes
             Assert.AreEqual("Nemoskvin", person.LastName);
         }
 
-        public virtual void GetPersonListTest()
+        [Test]
+        public void GetPersonListTest()
         {
             var personList = _personManager.GetPersonList();
 
@@ -75,7 +81,9 @@ namespace TestForOnlyOffice.Tests.Classes
             Assert.AreEqual(4, personList.Count);
         }
 
-        public virtual void DeletePersonTest(Guid id)
+        [Test]
+        [TestCaseSource(nameof(_guidForDelete))]
+        public void DeletePersonTest(Guid id)
         {
             var personList = _personManager.GetPersonList();
             var person = personList.FirstOrDefault(x => x.Id == id);
