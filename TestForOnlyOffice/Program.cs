@@ -21,20 +21,6 @@ namespace TestForOnlyOffice
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                })
-            .ConfigureAppConfiguration((hostingContent, config) =>
-                {
-                    config.Sources.Clear();
-
-                    var env = hostingContent.HostingEnvironment;
-                    config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                          .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
-                    config.AddEnvironmentVariables();
-
-                    if (args != null)
-                    {
-                        config.AddCommandLine(args);
-                    }
                 });
     }
 }
