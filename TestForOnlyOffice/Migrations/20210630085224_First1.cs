@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TestForOnlyOffice.Migrations
 {
-    public partial class First : Migration
+    public partial class First1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,9 +30,12 @@ namespace TestForOnlyOffice
         {
             services.AddDbContext<ApplicationDbContext>(
                 options => options.UseMySql(Configuration["ConnectionStrings:DefaultConnection"], new MySqlServerVersion(new Version(8, 0, 25))));
-            services.AddMvc();
             services.AddScoped<IPersonManager, DbPersonManager>();
             //services.AddScoped<IPersonManager, FilePersonManager>();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options => {
+                    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+                });
             services.AddRazorPages();
             services.AddAntiforgery(o => o.HeaderName = "CSRF-TOKEN");
         }
@@ -55,6 +59,7 @@ namespace TestForOnlyOffice
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
