@@ -24,24 +24,7 @@ namespace TestForOnlyOffice.Pages.Account
         }
 
         [BindProperty]
-        public InputModel Input { get; set; }
-
-        public class InputModel
-        {
-            [Required(ErrorMessage = "Не указано имя")]
-            public string FirstName { get; set; }
-
-            [Required(ErrorMessage = "Не указана фамилия")]
-            public string LastName { get; set; }
-
-            [Required]
-            [EmailAddress]
-            public string Email { get; set; }
-
-            [Required]
-            [DataType(DataType.Password)]
-            public string Password { get; set; }
-        }
+        public Person Input { get; set; }
 
         public IActionResult OnGet()
         {
@@ -62,6 +45,7 @@ namespace TestForOnlyOffice.Pages.Account
                     person.LastName = Input.LastName;
                     person.Email = Input.Email;
                     person.Password = Input.Password;
+                    person.Language = Input.Language;
 
                     _db.Person.Add(person); //may be IPersonManager.Create(person)?
                     await _db.SaveChangesAsync();

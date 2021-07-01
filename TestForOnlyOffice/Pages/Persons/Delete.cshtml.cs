@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using System;
+using TestForOnlyOffice.Classes;
 using TestForOnlyOffice.Interfaces;
 using TestForOnlyOffice.Model;
 
@@ -10,10 +12,12 @@ namespace TestForOnlyOffice.Pages.Persons
     public class DeleteModel : PageModel
     {
         private readonly IPersonManager _personManager;
+        private readonly IStringLocalizer<SharedResource> _sharedLocalizer;
 
-        public DeleteModel(IPersonManager personManager)
+        public DeleteModel(IPersonManager personManager, IStringLocalizer<SharedResource> sharedLocalizer)
         {
             _personManager = personManager;
+            _sharedLocalizer = sharedLocalizer;
         }
 
         [BindProperty]

@@ -1,17 +1,16 @@
 ﻿@page
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
 @model IndexModel
 @{
     ViewData["Title"] = "Главная страница";
 }
 
 <div class="text-left">
-    <h1 class="display-4">Добро пожаловать!</h1>
-    <h3>Инструкция</h3>
+    <h1 class="display-4">@Localizer["Welcome"]!</h1>
+    <h3>@Localizer["Instruction"]</h3>
     <p>
-        1. Открыть страницу <b>Persons</b> вверху.  <br/>
-        2. Записать значения <b>FirstName, LastName</b> (оба поля обязательны). <br />
-        3. Нажать на кнопку <b>Добавить запись в базу</b>. <br />
-        Если хотя бы одно поле будет пустым, то программа не даст сохранить запись, так как оба поля обязательны. <br />
-        После сохранения обновится страница, загрузятся данные с уже добавленными значениями. <br />
+        @Localizer["Instruction Text"]
     </p>
 </div>

@@ -1,13 +1,16 @@
 ﻿@page
 @model TestForOnlyOffice.Pages.Persons.EditModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@using TestForOnlyOffice.Classes;
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = SharedLocalizer["Edit Title"];
 }
 
-<h1>Edit</h1>
+<h1>@ViewData["Title"]</h1>
 
-<h4>Person</h4>
+<h4>@SharedLocalizer["Person"]</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -15,34 +18,42 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Person.Id" />
             <div class="form-group">
-                <label asp-for="Person.FirstName" class="control-label"></label>
+                <label class="control-label">@SharedLocalizer["FirstName"]</label>
                 <input asp-for="Person.FirstName" class="form-control" />
                 <span asp-validation-for="Person.FirstName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Person.LastName" class="control-label"></label>
+                <label class="control-label">@SharedLocalizer["LastName"]</label>
                 <input asp-for="Person.LastName" class="form-control" />
                 <span asp-validation-for="Person.LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Person.Email" class="control-label"></label>
+                <label class="control-label">@SharedLocalizer["Email"]</label>
                 <input asp-for="Person.Email" class="form-control" />
                 <span asp-validation-for="Person.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Person.Password" class="control-label"></label>
+                <label class="control-label">@SharedLocalizer["Password"]</label>
                 <input asp-for="Person.Password" class="form-control" />
                 <span asp-validation-for="Person.Password" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <label>@SharedLocalizer["Language"]</label>
+                <select asp-for="Person.Language" class="form-control">
+                    <option>English</option>
+                    <option>Russian</option>
+                </select>
+                <span asp-validation-for="Person.Language" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="@SharedLocalizer["Save"]" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-page="./Index">Back to List</a>
+    <a asp-page="./Index">@SharedLocalizer["Back To List"]</a>
 </div>
 
 @section Scripts {
