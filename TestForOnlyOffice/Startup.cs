@@ -3,10 +3,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -41,11 +43,21 @@ namespace TestForOnlyOffice
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
             services.AddControllersWithViews()
-                .AddDataAnnotationsLocalization()
                 .AddDataAnnotationsLocalization(options => 
                     options.DataAnnotationLocalizerProvider = (type, factory) =>
-                        factory.Create(typeof(SharedResource)))
-                .AddViewLocalization();
+                        factory.Create(typeof(SharedResource))) //add SharedResource
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
+
+            services.Configure<RequestLocalizationOptions>(options => {
+                var supportedCultures = new[]
+                {
+                    new CultureInfo("en"),
+                    new CultureInfo("ru")
+                };
+                options.DefaultRequestCulture = new RequestCulture(supportedCultures[0], supportedCultures[0]);
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+            });
 
             services.AddRazorPages();
             services.AddAntiforgery(o => o.HeaderName = "CSRF-TOKEN");
@@ -65,17 +77,8 @@ namespace TestForOnlyOffice
                 app.UseHsts();
             }
 
-            var supportedCultures = new[]
-            {
-                new CultureInfo("en"),
-                new CultureInfo("ru")
-            };
-            app.UseRequestLocalization(new RequestLocalizationOptions
-            {
-                DefaultRequestCulture = new RequestCulture("en"),
-                SupportedCultures = supportedCultures,
-                SupportedUICultures = supportedCultures
-            });
+            var localizationOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>().Value;
+            app.UseRequestLocalization(localizationOptions);
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

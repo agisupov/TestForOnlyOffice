@@ -53,6 +53,7 @@ namespace TestForOnlyOffice.Classes
                 record.LastName = person.LastName;
                 record.Email = person.Email;
                 record.Password = person.Password;
+                record.Language = person.Language;
                 _db.SaveChanges();
             }
             return record;

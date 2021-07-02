@@ -12,7 +12,7 @@ using TestForOnlyOffice.Model;
 
 namespace TestForOnlyOffice.Pages.Persons
 {
-    public class EditModel : PageModel
+    public class EditModel : PageModelBase
     {
         private readonly IPersonManager _personManager;
 

@@ -41,7 +41,14 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2021 | @Localizer["Test Project"] by AI
+            <div class="row">
+                <div class="col-md-6">
+                &copy; 2021 | @Localizer["Test Project"] by AI
+                </div>
+                <div class="col-md-6 text-right">
+                    @await Html.PartialAsync("_SelectLanguagePartial")
+                </div>
+            </div>
         </div>
     </footer>
 

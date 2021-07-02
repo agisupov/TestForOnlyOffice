@@ -22,6 +22,8 @@ namespace TestForOnlyOffice.Migrations
                     Email = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Password = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Language = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
@@ -32,13 +34,13 @@ namespace TestForOnlyOffice.Migrations
 
             migrationBuilder.InsertData(
                 table: "Person",
-                columns: new[] { "Id", "Email", "FirstName", "LastName", "Password" },
+                columns: new[] { "Id", "Email", "FirstName", "Language", "LastName", "Password" },
                 values: new object[,]
                 {
-                    { new Guid("f9278c77-4a5c-407b-95db-2d8736f2cd6c"), "alexmokhov@ya.ru", "Alex", "Mokhov", "123456" },
-                    { new Guid("1f8e9a51-f987-4c06-b115-f031d8f941f0"), "mukhiv@ya.ru", "Vladimir", "Mukhin", "123456" },
-                    { new Guid("1f459835-ea0e-4047-b7a5-250ee512d691"), "novikov@ya.ru", "Max", "Novikov", "123456" },
-                    { new Guid("963fea18-f18e-48da-967a-012c8ce6c06a"), "ivanoff@ya.ru", "Ivan", "Ivanov", "123456" }
+                    { new Guid("f9278c77-4a5c-407b-95db-2d8736f2cd6c"), "alexmokhov@ya.ru", "Alex", "ru", "Mokhov", "123456" },
+                    { new Guid("1f8e9a51-f987-4c06-b115-f031d8f941f0"), "mukhiv@ya.ru", "Vladimir", "ru", "Mukhin", "123456" },
+                    { new Guid("1f459835-ea0e-4047-b7a5-250ee512d691"), "novikov@ya.ru", "Max", "ru", "Novikov", "123456" },
+                    { new Guid("963fea18-f18e-48da-967a-012c8ce6c06a"), "ivanoff@ya.ru", "Ivan", "ru", "Ivanov", "123456" }
                 });
         }
 

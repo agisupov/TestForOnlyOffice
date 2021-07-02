@@ -32,6 +32,7 @@ namespace TestForOnlyOffice.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("Language")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("LastName")
@@ -52,6 +53,7 @@ namespace TestForOnlyOffice.Migrations
                             Id = new Guid("f9278c77-4a5c-407b-95db-2d8736f2cd6c"),
                             Email = "alexmokhov@ya.ru",
                             FirstName = "Alex",
+                            Language = "ru",
                             LastName = "Mokhov",
                             Password = "123456"
                         },
@@ -60,6 +62,7 @@ namespace TestForOnlyOffice.Migrations
                             Id = new Guid("1f8e9a51-f987-4c06-b115-f031d8f941f0"),
                             Email = "mukhiv@ya.ru",
                             FirstName = "Vladimir",
+                            Language = "ru",
                             LastName = "Mukhin",
                             Password = "123456"
                         },
@@ -68,6 +71,7 @@ namespace TestForOnlyOffice.Migrations
                             Id = new Guid("1f459835-ea0e-4047-b7a5-250ee512d691"),
                             Email = "novikov@ya.ru",
                             FirstName = "Max",
+                            Language = "ru",
                             LastName = "Novikov",
                             Password = "123456"
                         },
@@ -76,6 +80,7 @@ namespace TestForOnlyOffice.Migrations
                             Id = new Guid("963fea18-f18e-48da-967a-012c8ce6c06a"),
                             Email = "ivanoff@ya.ru",
                             FirstName = "Ivan",
+                            Language = "ru",
                             LastName = "Ivanov",
                             Password = "123456"
                         });

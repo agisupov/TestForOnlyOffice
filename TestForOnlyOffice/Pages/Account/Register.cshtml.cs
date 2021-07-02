@@ -14,7 +14,7 @@ using TestForOnlyOffice.Model;
 
 namespace TestForOnlyOffice.Pages.Account
 {
-    public class RegisterModel : PageModel
+    public class RegisterModel : PageModelBase
     {
         private ApplicationDbContext _db;
 
@@ -45,11 +45,12 @@ namespace TestForOnlyOffice.Pages.Account
                     person.LastName = Input.LastName;
                     person.Email = Input.Email;
                     person.Password = Input.Password;
-                    person.Language = Input.Language;
+                    person.Language = languages[Input.Language];
 
                     _db.Person.Add(person); //may be IPersonManager.Create(person)?
                     await _db.SaveChangesAsync();
                     await Authenticate(Input.Email);
+                    base.SetLanguage(person.Language);
                     return LocalRedirect(returnUrl);
                 }
                 else

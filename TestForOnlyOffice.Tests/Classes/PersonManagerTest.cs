@@ -52,7 +52,8 @@ namespace TestForOnlyOffice.Tests.Classes
                 FirstName = "Timofei",
                 LastName = "Moskvin",
                 Email = "moskvin@ya.ru",
-                Password = "123456"
+                Password = "123456",
+                Language = "en"
             };
 
             //Act

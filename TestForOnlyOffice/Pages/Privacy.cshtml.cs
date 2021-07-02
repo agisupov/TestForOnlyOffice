@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace TestForOnlyOffice.Pages
 {
-    public class PrivacyModel : PageModel
+    public class PrivacyModel : PageModelBase
     {
         private readonly ILogger<PrivacyModel> _logger;
 

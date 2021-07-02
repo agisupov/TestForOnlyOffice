@@ -29,7 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
+    <Folder Include="Resources\Model\" />
     <Folder Include="Resources\Pages\Persons\" />
   </ItemGroup>
 

@@ -6,7 +6,7 @@ using TestForOnlyOffice.Model;
 
 namespace TestForOnlyOffice.Pages.Persons
 {
-    public class IndexModel : PageModel
+    public class IndexModel : PageModelBase
     {
         private readonly IPersonManager _personManager;
 

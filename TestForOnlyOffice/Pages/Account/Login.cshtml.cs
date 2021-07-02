@@ -13,7 +13,7 @@ using TestForOnlyOffice.Model;
 
 namespace TestForOnlyOffice.Pages.Account
 {
-    public class LoginModel : PageModel
+    public class LoginModel : PageModelBase
     {
         private ApplicationDbContext _db;
 
@@ -28,11 +28,13 @@ namespace TestForOnlyOffice.Pages.Account
 
         public class InputModel
         {
-            [Required]
-            [EmailAddress]
+            [Required(ErrorMessage = "EmailRequired")]
+            [DataType(DataType.EmailAddress)]
+            [EmailAddress(ErrorMessage = "EmailAddress")]
             public string Email { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "PasswordRequired")]
+            [MinLength(6, ErrorMessage = "PasswordLength")]
             [DataType(DataType.Password)]
             public string Password { get; set; }
         }
@@ -52,6 +54,7 @@ namespace TestForOnlyOffice.Pages.Account
             if (Person != null)
             {
                 await Authenticate(Input.Email);
+                base.SetLanguage(Person.Language);
                 return LocalRedirect(returnUrl);
             }
             else
@@ -72,6 +75,7 @@ namespace TestForOnlyOffice.Pages.Account
             ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
             // установка аутентификационных куки
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
+            HttpContext.Response.Cookies.Append("id", Person.Id.ToString());
         }
     }
 }

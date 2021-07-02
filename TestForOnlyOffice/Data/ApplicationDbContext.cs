@@ -29,6 +29,7 @@ namespace TestForOnlyOffice.Data
             modelBuilder.Entity<Person>().Property(b => b.LastName).IsRequired();
             modelBuilder.Entity<Person>().Property(b => b.Email).IsRequired();
             modelBuilder.Entity<Person>().Property(b => b.Password).IsRequired();
+            modelBuilder.Entity<Person>().Property(b => b.Language).IsRequired();
 
             modelBuilder.Entity<Person>().HasData(new List<Person>
             {
@@ -38,7 +39,8 @@ namespace TestForOnlyOffice.Data
                     FirstName = "Alex",
                     LastName = "Mokhov",
                     Email = "alexmokhov@ya.ru",
-                    Password = "123456"
+                    Password = "123456",
+                    Language = "ru"
                 },
                 new Person
                 {
@@ -46,7 +48,8 @@ namespace TestForOnlyOffice.Data
                     FirstName = "Vladimir",
                     LastName = "Mukhin",
                     Email = "mukhiv@ya.ru",
-                    Password = "123456"
+                    Password = "123456",
+                    Language = "ru"
                 },
                 new Person
                 {
@@ -54,7 +57,8 @@ namespace TestForOnlyOffice.Data
                     FirstName = "Max",
                     LastName = "Novikov",
                     Email = "novikov@ya.ru",
-                    Password = "123456"
+                    Password = "123456",
+                    Language = "ru"
                 },
                 new Person
                 {
@@ -62,7 +66,8 @@ namespace TestForOnlyOffice.Data
                     FirstName = "Ivan",
                     LastName = "Ivanov",
                     Email = "ivanoff@ya.ru",
-                    Password = "123456"
+                    Password = "123456",
+                    Language = "ru"
                 }
             });
         }

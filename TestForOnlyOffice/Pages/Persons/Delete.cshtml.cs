@@ -9,7 +9,7 @@ using TestForOnlyOffice.Model;
 
 namespace TestForOnlyOffice.Pages.Persons
 {
-    public class DeleteModel : PageModel
+    public class DeleteModel : PageModelBase
     {
         private readonly IPersonManager _personManager;
         private readonly IStringLocalizer<SharedResource> _sharedLocalizer;
