@@ -59,13 +59,18 @@ namespace TestForOnlyOffice.Pages.Account
                 return NotFound();
             }
 
+            await UpdateLocalityClaim();
+            return RedirectToPage("/Index");
+        }
+
+        public async Task UpdateLocalityClaim()
+        {
             var identity = User.Identity as ClaimsIdentity;
             var claim = User.FindFirst(ClaimTypes.Locality);
             if (claim != null)
                 identity.RemoveClaim(claim);
-            identity.AddClaim(new Claim(ClaimTypes.Locality, languages[Person.Language])); 
+            identity.AddClaim(new Claim(ClaimTypes.Locality, languages[Person.Language]));
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
-            return RedirectToPage("/Index");
         }
     }
 }
