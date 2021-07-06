@@ -9,9 +9,9 @@ namespace TestForOnlyOffice.Classes
 {
     public class CultureMiddleware
     {
-        private readonly RequestDelegate next;
+        private readonly RequestDelegate _next;
 
-        public CultureMiddleware(RequestDelegate next) => this.next = next;
+        public CultureMiddleware(RequestDelegate next) => _next = next;
 
         public async Task Invoke(HttpContext context)
         {
@@ -34,13 +34,13 @@ namespace TestForOnlyOffice.Classes
             Thread.CurrentThread.CurrentCulture = culture;
             Thread.CurrentThread.CurrentUICulture = culture;
 
-            await next.Invoke(context);
+            await _next.Invoke(context);
         }
     }
 
     public static class CultureMiddlewareExtensions
     {
-        public static IApplicationBuilder UseCultureMiddleware(this IApplicationBuilder builder)
+        public static IApplicationBuilder UseCulture(this IApplicationBuilder builder)
         {
             return builder.UseMiddleware<CultureMiddleware>();
         }

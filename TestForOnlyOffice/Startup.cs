@@ -77,7 +77,7 @@ namespace TestForOnlyOffice
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseCultureMiddleware(); //culture middleware
+            app.UseCulture(); //culture middleware
 
             app.UseEndpoints(endpoints =>
             {
