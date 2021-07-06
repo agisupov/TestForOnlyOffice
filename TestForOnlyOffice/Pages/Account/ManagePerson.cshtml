@@ -1,22 +1,20 @@
 ﻿@page
-@model TestForOnlyOffice.Pages.Persons.CreateModel
+@model TestForOnlyOffice.Pages.Account.ManagePersonModel
 @using Microsoft.AspNetCore.Mvc.Localization
 @using TestForOnlyOffice.Classes;
 @inject IHtmlLocalizer<SharedResource> SharedLocalizer
 
-
 @{
-    ViewData["Title"] = SharedLocalizer["Create Title"];
+    ViewData["Title"] = SharedLocalizer["Manage"];
 }
 
-<h1>@ViewData["Title"]</h1>
-
-<h4>Person</h4>
+<h4>@ViewData["Title"]</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Person.Id" />
             <div class="form-group">
                 <label class="control-label">@SharedLocalizer["FirstName"]</label>
                 <input asp-for="Person.FirstName" class="form-control" />
@@ -37,25 +35,17 @@
                 <input asp-for="Person.Password" class="form-control" />
                 <span asp-validation-for="Person.Password" class="text-danger"></span>
             </div>
-            @*<div class="form-group">
+            <div class="form-group">
                 <label>@SharedLocalizer["Language"]</label>
                 <select asp-for="Person.Language" class="form-control">
                     <option>English</option>
                     <option>Russian</option>
                 </select>
                 <span asp-validation-for="Person.Language" class="text-danger"></span>
-            </div>*@
+            </div>
             <div class="form-group">
-                <input type="submit" value="@SharedLocalizer["Create"]" class="btn btn-primary" />
+                <input type="submit" value="@SharedLocalizer["Save"]" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
-
-<div>
-    <a asp-page="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

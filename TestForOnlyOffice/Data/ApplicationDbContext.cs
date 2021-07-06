@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,6 @@ namespace TestForOnlyOffice.Data
             modelBuilder.Entity<Person>().Property(b => b.LastName).IsRequired();
             modelBuilder.Entity<Person>().Property(b => b.Email).IsRequired();
             modelBuilder.Entity<Person>().Property(b => b.Password).IsRequired();
-            modelBuilder.Entity<Person>().Property(b => b.Language).IsRequired();
 
             modelBuilder.Entity<Person>().HasData(new List<Person>
             {
@@ -49,7 +49,7 @@ namespace TestForOnlyOffice.Data
                     LastName = "Mukhin",
                     Email = "mukhiv@ya.ru",
                     Password = "123456",
-                    Language = "ru"
+                    Language = "en"
                 },
                 new Person
                 {
@@ -58,7 +58,7 @@ namespace TestForOnlyOffice.Data
                     LastName = "Novikov",
                     Email = "novikov@ya.ru",
                     Password = "123456",
-                    Language = "ru"
+                    Language = null
                 },
                 new Person
                 {
@@ -67,7 +67,7 @@ namespace TestForOnlyOffice.Data
                     LastName = "Ivanov",
                     Email = "ivanoff@ya.ru",
                     Password = "123456",
-                    Language = "ru"
+                    Language = null
                 }
             });
         }

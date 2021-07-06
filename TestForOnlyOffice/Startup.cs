@@ -48,17 +48,6 @@ namespace TestForOnlyOffice
                         factory.Create(typeof(SharedResource))) //add SharedResource
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
 
-            services.Configure<RequestLocalizationOptions>(options => {
-                var supportedCultures = new[]
-                {
-                    new CultureInfo("en"),
-                    new CultureInfo("ru")
-                };
-                options.DefaultRequestCulture = new RequestCulture(supportedCultures[0], supportedCultures[0]);
-                options.SupportedCultures = supportedCultures;
-                options.SupportedUICultures = supportedCultures;
-            });
-
             services.AddRazorPages();
             services.AddAntiforgery(o => o.HeaderName = "CSRF-TOKEN");
         }
@@ -87,6 +76,8 @@ namespace TestForOnlyOffice
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseCultureMiddleware(); //culture middleware
 
             app.UseEndpoints(endpoints =>
             {

@@ -6,7 +6,7 @@ using TestForOnlyOffice.Model;
 namespace TestForOnlyOffice.Pages.Persons
 {
 
-    public class CreateModel : PageModelBase
+    public class CreateModel : PageModel
     {
         private readonly IPersonManager _personManager;
 
@@ -31,7 +31,6 @@ namespace TestForOnlyOffice.Pages.Persons
                 return Page();
             }
 
-            Person.Language = languages[Person.Language];
             _personManager.Create(Person);
             return RedirectToPage("./Index");
         }

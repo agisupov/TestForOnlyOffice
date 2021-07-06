@@ -183,6 +183,9 @@
   <data name="LastNameRequired" xml:space="preserve">
     <value>Lastname is required</value>
   </data>
+  <data name="Manage" xml:space="preserve">
+    <value>Manage</value>
+  </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
   </data>

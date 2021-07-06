@@ -20,7 +20,8 @@ namespace TestForOnlyOffice.Tests.Classes
             FirstName = "Max",
             LastName = "Novikov",
             Email = "novikov@ya.ru",
-            Password = "123456"
+            Password = "123456",
+            Language = "en"
             }
         };
         public static List<Guid> _guidForDelete = new List<Guid>()

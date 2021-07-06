@@ -36,7 +36,6 @@ namespace TestForOnlyOffice.Model
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Required(ErrorMessage = "LanguageRequired")]
         public string Language { get; set; }
     }
 }

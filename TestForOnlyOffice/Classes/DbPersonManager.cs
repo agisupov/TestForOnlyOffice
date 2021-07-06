@@ -18,10 +18,10 @@ namespace TestForOnlyOffice.Classes
             _db = db;
         }
 
-        public void Create(Person person)
+        public async void Create(Person person)
         {
             _db.Person.Add(person);
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
         }
 
         public void Delete(Guid id)
@@ -49,11 +49,21 @@ namespace TestForOnlyOffice.Classes
             var record = _db.Person.FirstOrDefault(x => x.Id == person.Id);
             if (record != null)
             {
-                record.FirstName = person.FirstName;
-                record.LastName = person.LastName;
-                record.Email = person.Email;
-                record.Password = person.Password;
-                record.Language = person.Language;
+                if (record.FirstName != person.FirstName)
+                    record.FirstName = person.FirstName;
+
+                if (record.LastName != person.LastName)
+                    record.LastName = person.LastName;
+
+                if (record.Email != person.Email)
+                    record.Email = person.Email;
+
+                if (record.Password != person.Password)
+                    record.Password = person.Password;
+
+                if (record.Language != person.Language)
+                    record.Language = person.Language;
+
                 _db.SaveChanges();
             }
             return record;

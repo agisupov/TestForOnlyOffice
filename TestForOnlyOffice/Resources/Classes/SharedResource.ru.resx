@@ -183,6 +183,9 @@
   <data name="LastNameRequired" xml:space="preserve">
     <value>Необходимо ввести фамилию</value>
   </data>
+  <data name="Manage" xml:space="preserve">
+    <value>Управление</value>
+  </data>
   <data name="Password" xml:space="preserve">
     <value>Пароль</value>
   </data>

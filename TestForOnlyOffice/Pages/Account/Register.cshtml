@@ -39,14 +39,14 @@
                 <input asp-for="Input.Password" class="form-control" />
                 <span asp-validation-for="Input.Password" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label>@SharedLocalizer["Language"]</label>
                 <select asp-for="Input.Language" class="form-control">
                     <option>English</option>
                     <option>Russian</option>
                 </select>
                 <span asp-validation-for="Input.Language" class="text-danger"></span>
-            </div>
+            </div>*@
             <button type="submit" class="btn btn-primary">@SharedLocalizer["Register"]</button>
         </form>
     </div>

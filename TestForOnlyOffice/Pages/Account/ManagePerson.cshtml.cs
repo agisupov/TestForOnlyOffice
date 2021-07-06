@@ -1,22 +1,27 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using TestForOnlyOffice.Data;
 using TestForOnlyOffice.Interfaces;
 using TestForOnlyOffice.Model;
 
-namespace TestForOnlyOffice.Pages.Persons
+namespace TestForOnlyOffice.Pages.Account
 {
-    public class EditModel : PageModel
+    public class ManagePersonModel : PageModel
     {
         private readonly IPersonManager _personManager;
+        private Dictionary<string, string> languages = new Dictionary<string, string>
+        {
+            {"Russian", "ru"},
+            {"English", "en"}
+        };
 
-        public EditModel(IPersonManager personManager)
+        public ManagePersonModel(IPersonManager personManager)
         {
             _personManager = personManager;
         }
@@ -40,9 +45,7 @@ namespace TestForOnlyOffice.Pages.Persons
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost()
         {
             if (!ModelState.IsValid)
             {
@@ -56,7 +59,13 @@ namespace TestForOnlyOffice.Pages.Persons
                 return NotFound();
             }
 
-            return RedirectToPage("./Index");
+            var identity = User.Identity as ClaimsIdentity;
+            var claim = User.FindFirst(ClaimTypes.Locality);
+            if (claim != null)
+                identity.RemoveClaim(claim);
+            identity.AddClaim(new Claim(ClaimTypes.Locality, languages[Person.Language])); 
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
+            return RedirectToPage("/Index");
         }
     }
 }

@@ -8,7 +8,7 @@ using TestForOnlyOffice.Model;
 
 namespace TestForOnlyOffice.Pages.Persons
 {
-    public class DetailsModel : PageModelBase
+    public class DetailsModel : PageModel
     {
         private readonly IPersonManager _personManager;
 

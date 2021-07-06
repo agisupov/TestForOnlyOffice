@@ -13,7 +13,7 @@ using TestForOnlyOffice.Model;
 
 namespace TestForOnlyOffice.Pages.Account
 {
-    public class LoginModel : PageModelBase
+    public class LoginModel : PageModel
     {
         private ApplicationDbContext _db;
 
@@ -53,8 +53,7 @@ namespace TestForOnlyOffice.Pages.Account
             Person = _db.Person.FirstOrDefault(x => x.Email == Input.Email && x.Password == Input.Password);
             if (Person != null)
             {
-                await Authenticate(Input.Email);
-                base.SetLanguage(Person.Language);
+                await Authenticate(Person);
                 return LocalRedirect(returnUrl);
             }
             else
@@ -64,18 +63,17 @@ namespace TestForOnlyOffice.Pages.Account
             }
         }
 
-        public async Task Authenticate(string personName)
+        public async Task Authenticate(Person person)
         {
-            // создаем один claim
             var claims = new List<Claim>
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, personName)
+                new Claim(ClaimTypes.Email, person.Email),
+                new Claim(ClaimTypes.Name, person.FirstName + " " + person.LastName),
+                new Claim(ClaimTypes.Locality, person.Language),
+                new Claim(ClaimTypes.Sid, person.Id.ToString())
             };
-            // создаем объект ClaimsIdentity
-            ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
-            // установка аутентификационных куки
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
-            HttpContext.Response.Cookies.Append("id", Person.Id.ToString());
+            ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
         }
     }
 }

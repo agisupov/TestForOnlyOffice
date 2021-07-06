@@ -1,11 +1,22 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using TestForOnlyOffice.Classes;
+@using System.Security.Claims;
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
 @inject IViewLocalizer Localizer
+
+@{
+    Guid guid = Guid.Empty;
+    if (User.Identity.IsAuthenticated) {
+        var sid = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Sid).Value.ToString();
+        guid = Guid.Parse(sid);
+    }
+}
 
 <ul class="navbar-nav">
     @if (User.Identity.IsAuthenticated)
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@Localizer["Hello"] @User.Identity.Name!</a>
+            <a class="nav-link text-dark" asp-page="/Account/ManagePerson" asp-route-id="@guid" title="Manage">@Localizer["Hello"] @User.Identity.Name!</a>
         </li>
         <li class="nav-item">
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">

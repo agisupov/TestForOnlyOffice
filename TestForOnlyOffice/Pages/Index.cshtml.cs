@@ -1,8 +1,9 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Logging;
 
 namespace TestForOnlyOffice.Pages
 {
-    public class IndexModel : PageModelBase
+    public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
 
