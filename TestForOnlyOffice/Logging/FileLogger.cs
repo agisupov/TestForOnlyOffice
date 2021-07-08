@@ -28,7 +28,7 @@ namespace TestForOnlyOffice.Logging
 
         public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
         {
-            var filePath = $"{_name}-{DateTimeOffset.UtcNow.ToString("yyyy-MM-dd")}.log";
+            var filePath = $"{_name}_{DateTimeOffset.UtcNow:yyyy-MM-dd}.log";
             var record = string.Format("{0} [{1}] {2} {3}", 
                 "[" + DateTimeOffset.UtcNow.ToString("yyyy-MM-dd HH:mm:ss") + "]", 
                 logLevel.ToString(), 
