@@ -13,5 +13,6 @@ namespace TestForOnlyOffice.Interfaces
         void Create(Person person);
         Person Update(Person person);
         void Delete(Guid id);
+        Person Login(string email, string password);
     }
 }

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Logging;
 using TestForOnlyOffice.Interfaces;
 using TestForOnlyOffice.Model;
 
@@ -15,15 +16,17 @@ namespace TestForOnlyOffice.Pages.Account
     public class ManagePersonModel : PageModel
     {
         private readonly IPersonManager _personManager;
+        private ILogger<ManagePersonModel> _logger;
         private Dictionary<string, string> languages = new Dictionary<string, string>
         {
             {"Russian", "ru"},
             {"English", "en"}
         };
 
-        public ManagePersonModel(IPersonManager personManager)
+        public ManagePersonModel(IPersonManager personManager, ILogger<ManagePersonModel> logger)
         {
             _personManager = personManager;
+            _logger = logger;
         }
 
         [BindProperty]
@@ -33,6 +36,7 @@ namespace TestForOnlyOffice.Pages.Account
         {
             if (id == Guid.Empty)
             {
+                _logger.LogError("Manage Person Page Error. Id is empty");
                 return NotFound();
             }
 
@@ -40,8 +44,11 @@ namespace TestForOnlyOffice.Pages.Account
 
             if (Person == null)
             {
+                _logger.LogError("Manage Person Page Error. Person is not found");
                 return NotFound();
             }
+
+            _logger.LogInformation("Manage Person is open");
             return Page();
         }
 
@@ -49,6 +56,7 @@ namespace TestForOnlyOffice.Pages.Account
         {
             if (!ModelState.IsValid)
             {
+                _logger.LogError("Error. ModelState is not valid");
                 return Page();
             }
 
@@ -56,10 +64,12 @@ namespace TestForOnlyOffice.Pages.Account
 
             if (Person == null)
             {
+                _logger.LogError("Manage Person Page Error. Person is not found");
                 return NotFound();
             }
 
             await UpdateLocalityClaim();
+            _logger.LogInformation("Person update data");
             return RedirectToPage("/Index");
         }
 

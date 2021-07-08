@@ -9,7 +9,7 @@ using TestForOnlyOffice.Data;
 namespace TestForOnlyOffice.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210706125710_First1")]
+    [Migration("20210707135347_First1")]
     partial class First1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

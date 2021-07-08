@@ -68,5 +68,10 @@ namespace TestForOnlyOffice.Classes
             }
             return record;
         }
+
+        public Person Login(string email, string password)
+        {
+            return _db.Person.FirstOrDefault(x => x.Email == email && x.Password == password);
+        }
     }
 }

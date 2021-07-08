@@ -71,5 +71,11 @@ namespace TestForOnlyOffice.Classes
             File.WriteAllText("person.json", jsonStr);
             return recordPerson;
         }
+
+        public Person Login(string email, string password)
+        {
+            _personList = GetPersonList();
+            return _personList.FirstOrDefault(x => x.Email == email && x.Password == password);
+        }
     }
 }

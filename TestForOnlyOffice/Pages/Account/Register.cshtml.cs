@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using TestForOnlyOffice.Data;
 using TestForOnlyOffice.Interfaces;
 using TestForOnlyOffice.Model;
@@ -18,10 +19,12 @@ namespace TestForOnlyOffice.Pages.Account
     public class RegisterModel : PageModel
     {
         private readonly IPersonManager _personManager;
+        private ILogger<RegisterModel> _logger;
 
-        public RegisterModel(IPersonManager personManager)
+        public RegisterModel(IPersonManager personManager, ILogger<RegisterModel> logger)
         {
             _personManager = personManager;
+            _logger = logger;
         }
 
         [BindProperty]
@@ -29,6 +32,7 @@ namespace TestForOnlyOffice.Pages.Account
 
         public IActionResult OnGet()
         {
+            _logger.LogInformation("Register person");
             return Page();
         }
 
@@ -45,8 +49,10 @@ namespace TestForOnlyOffice.Pages.Account
                 person.Language = null;
 
                 _personManager.Create(person);
+                _logger.LogInformation("Person added");
                 return LocalRedirect(returnUrl);
             }
+            _logger.LogError("Person not added");
             return Page();
         }
     }

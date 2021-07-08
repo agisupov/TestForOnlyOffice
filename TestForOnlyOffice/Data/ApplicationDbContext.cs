@@ -1,17 +1,25 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using TestForOnlyOffice.Model;
+using TestForOnlyOffice.Logging;
 
 namespace TestForOnlyOffice.Data
 {
     public class ApplicationDbContext : DbContext
     {
+        public static readonly ILoggerFactory FileLoggerFactory = LoggerFactory.Create(builder =>
+        {
+            builder.AddProvider(new FileLoggerProvider("eflog"));
+        });
+
         public DbSet<Person> Person { get; set; }
 
         public ApplicationDbContext()
@@ -80,6 +88,7 @@ namespace TestForOnlyOffice.Data
             optionsBuilder.UseMySql(configuration.GetConnectionString("DefaultConnection"),
                 new MySqlServerVersion(new Version(8, 0, 25))
             );
+            optionsBuilder.UseLoggerFactory(FileLoggerFactory);
         }
     }
 }

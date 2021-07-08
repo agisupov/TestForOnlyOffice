@@ -14,7 +14,7 @@ namespace TestForOnlyOffice.Pages
 
         public void OnGet()
         {
-
+            _logger.LogInformation("Open Index page");
         }
     }
 }

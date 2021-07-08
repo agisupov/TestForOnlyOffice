@@ -8,18 +8,22 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Logging;
 using TestForOnlyOffice.Data;
+using TestForOnlyOffice.Interfaces;
 using TestForOnlyOffice.Model;
 
 namespace TestForOnlyOffice.Pages.Account
 {
     public class LoginModel : PageModel
     {
-        private ApplicationDbContext _db;
+        private IPersonManager _personManager;
+        private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(ApplicationDbContext db)
+        public LoginModel(IPersonManager personManager, ILogger<LoginModel> logger)
         {
-            _db = db;
+            _personManager = personManager;
+            _logger = logger;
         }
 
         [BindProperty]
@@ -41,6 +45,7 @@ namespace TestForOnlyOffice.Pages.Account
 
         public void OnGet()
         {
+            _logger.LogInformation("Login Page is open");
         }
 
         public async Task<IActionResult> OnPost(string returnUrl = null)
@@ -48,16 +53,19 @@ namespace TestForOnlyOffice.Pages.Account
             returnUrl = Url.Content("~/");
             if (!ModelState.IsValid)
             {
+                _logger.LogError("Login Page Error. Model state is not valid");
                 return Page();
             }
-            Person = _db.Person.FirstOrDefault(x => x.Email == Input.Email && x.Password == Input.Password);
+            Person = _personManager.Login(Input.Email, Input.Password);
             if (Person != null)
             {
                 await Authenticate(Person);
+                _logger.LogInformation($"Person {Person.FirstName} {Person.LastName} is authenticated");
                 return LocalRedirect(returnUrl);
             }
             else
             {
+                _logger.LogError("Login Page Error. Invalid login attempt");
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                 return Page();
             }

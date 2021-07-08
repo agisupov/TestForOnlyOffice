@@ -27,6 +27,7 @@ namespace TestForOnlyOffice.Pages
         public void OnGet()
         {
             RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
+            _logger.LogError("Error Page is open");
         }
     }
 }

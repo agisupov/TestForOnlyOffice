@@ -8,15 +8,18 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using TestForOnlyOffice.Classes;
 using TestForOnlyOffice.Data;
 using TestForOnlyOffice.Interfaces;
+using TestForOnlyOffice.Logging;
 
 namespace TestForOnlyOffice
 {
@@ -36,6 +39,7 @@ namespace TestForOnlyOffice
                 options => options.UseMySql(Configuration["ConnectionStrings:DefaultConnection"], new MySqlServerVersion(new Version(8, 0, 25))));
             services.AddScoped<IPersonManager, DbPersonManager>();
             //services.AddScoped<IPersonManager, FilePersonManager>();
+
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options => {
                     options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
@@ -53,8 +57,11 @@ namespace TestForOnlyOffice
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
+            loggerFactory.AddFileLogger(Path.Combine(Directory.GetCurrentDirectory(), "testlog"));
+            var logger = loggerFactory.CreateLogger("testlog");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
