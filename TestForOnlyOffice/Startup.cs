@@ -57,11 +57,8 @@ namespace TestForOnlyOffice
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            loggerFactory.AddFileLogger("testlog");
-            var logger = loggerFactory.CreateLogger("");
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

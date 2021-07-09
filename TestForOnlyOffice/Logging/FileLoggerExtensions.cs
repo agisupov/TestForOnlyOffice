@@ -9,9 +9,9 @@ namespace TestForOnlyOffice.Logging
 {
     public static class FileLoggerExtensions
     {
-        public static ILoggerFactory AddFileLogger(this ILoggerFactory factory, string filePath)
+        public static ILoggerFactory AddFileLogger(this ILoggerFactory factory)
         {
-            factory.AddProvider(new FileLoggerProvider(filePath));
+            factory.AddProvider(new FileLoggerProvider());
             return factory;
         }
     }

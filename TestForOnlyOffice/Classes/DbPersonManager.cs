@@ -18,10 +18,10 @@ namespace TestForOnlyOffice.Classes
             _db = db;
         }
 
-        public async void Create(Person person)
+        public void Create(Person person)
         {
             _db.Person.Add(person);
-            await _db.SaveChangesAsync();
+            _db.SaveChanges();
         }
 
         public void Delete(Guid id)

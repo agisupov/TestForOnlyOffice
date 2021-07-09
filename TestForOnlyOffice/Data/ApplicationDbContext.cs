@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TestForOnlyOffice.Model;
 using TestForOnlyOffice.Logging;
+using NLog.Extensions.Logging;
 
 namespace TestForOnlyOffice.Data
 {
@@ -16,7 +17,7 @@ namespace TestForOnlyOffice.Data
     {
         public static readonly ILoggerFactory FileLoggerFactory = LoggerFactory.Create(builder =>
         {
-            builder.AddProvider(new FileLoggerProvider("eflog"));
+            builder.AddProvider(new NLogLoggerProvider());
         });
 
         public DbSet<Person> Person { get; set; }
