@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
@@ -52,7 +55,7 @@ namespace TestForOnlyOffice.Pages.Account
             return Page();
         }
 
-        public async Task<IActionResult> OnPost()
+        public async Task<IActionResult> OnPostSave()
         {
             if (!ModelState.IsValid)
             {
@@ -60,7 +63,7 @@ namespace TestForOnlyOffice.Pages.Account
                 return Page();
             }
 
-            Person = _personManager.Update(Person);
+            UpdatePerson();
 
             if (Person == null)
             {
@@ -73,14 +76,53 @@ namespace TestForOnlyOffice.Pages.Account
             return RedirectToPage("/Index");
         }
 
+        public async Task<IActionResult> OnPostUpload()
+        {
+            if (Person.AvatarFile != null)
+            {
+                Person.Avatar = await GetByteArrayFromImage(Person.AvatarFile);
+            }
+            UpdatePerson();
+            return RedirectToPage(new { id = Person.Id });
+        }
+
+        public void UpdatePerson()
+        {
+            Person.Language = languages[Person.Language];
+            Person = _personManager.Update(Person);
+        }
+
         public async Task UpdateLocalityClaim()
         {
             var identity = User.Identity as ClaimsIdentity;
             var claim = User.FindFirst(ClaimTypes.Locality);
             if (claim != null)
                 identity.RemoveClaim(claim);
-            identity.AddClaim(new Claim(ClaimTypes.Locality, languages[Person.Language]));
+            identity.AddClaim(new Claim(ClaimTypes.Locality, Person.Language));
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
+        }
+
+        private async Task<byte[]> GetByteArrayFromImage(IFormFile imgFile)
+        {
+            using var stream = new MemoryStream();
+            await imgFile.CopyToAsync(stream);
+            if (stream.Length <= 5242880)
+            {
+                _logger.LogInformation("File is ready to upload");
+                return stream.ToArray();
+            }
+            else
+            {
+                _logger.LogError("Error. File more than 5 MB");
+                return null;
+            }
+        }
+
+        public string GetImage()
+        {
+            string img64 = Convert.ToBase64String(Person.Avatar);
+            string img64Url = string.Format($"data:image/jpg;base64,{img64}");
+            return img64Url;
         }
     }
 }

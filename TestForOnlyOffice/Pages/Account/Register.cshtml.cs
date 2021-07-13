@@ -47,6 +47,7 @@ namespace TestForOnlyOffice.Pages.Account
                 person.Email = Input.Email;
                 person.Password = Input.Password;
                 person.Language = null;
+                person.Avatar = null;
 
                 _personManager.Create(person);
                 _logger.LogInformation("Person added");

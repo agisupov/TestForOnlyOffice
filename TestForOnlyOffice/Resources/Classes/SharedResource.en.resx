@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Avatar" xml:space="preserve">
+    <value>Avatar</value>
+  </data>
   <data name="Back To List" xml:space="preserve">
     <value>Back To List</value>
   </data>
@@ -209,5 +212,8 @@
   </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="Upload" xml:space="preserve">
+    <value>Upload</value>
   </data>
 </root>

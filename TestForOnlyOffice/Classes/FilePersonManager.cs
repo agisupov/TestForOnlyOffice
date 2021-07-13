@@ -64,6 +64,8 @@ namespace TestForOnlyOffice.Classes
                     record.LastName = person.LastName;
                     record.Email = person.Email;
                     record.Password = record.Password;
+                    record.Language = record.Language;
+                    record.Avatar = record.Avatar;
                     recordPerson = record;
                 }
             }

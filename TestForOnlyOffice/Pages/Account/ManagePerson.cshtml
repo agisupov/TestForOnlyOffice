@@ -11,8 +11,8 @@
 <h4>@ViewData["Title"]</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form method="post">
+    <div class="col-md-6">
+        <form method="post" enctype="multipart/form-data">
             <input type="hidden" asp-for="Person.Id" />
             <div class="form-group">
                 <label class="control-label">@SharedLocalizer["FirstName"]</label>
@@ -43,7 +43,17 @@
                 <span asp-validation-for="Person.Language" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="@SharedLocalizer["Save"]" class="btn btn-primary" />
+                <input type="hidden" asp-for="Person.Avatar" />
+                <label>@SharedLocalizer["Avatar"]</label><br />
+                @if (Model.Person.Avatar != null)
+                {
+                    <img src="@Model.GetImage()" width="240" /><br />
+                }
+                <input asp-for="Person.AvatarFile" type="file" class="form-control-file" accept="image/jpeg">
+                <input asp-page-handler="Upload" class="input-group-text" type="submit" value="@SharedLocalizer["Upload"]" />
+            </div>
+            <div class="form-group">
+                <input asp-page-handler="Save" type="submit" value="@SharedLocalizer["Save"]" class="btn btn-primary" />
             </div>
         </form>
     </div>

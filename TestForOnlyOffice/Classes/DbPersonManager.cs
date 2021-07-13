@@ -64,6 +64,9 @@ namespace TestForOnlyOffice.Classes
                 if (record.Language != person.Language)
                     record.Language = person.Language;
 
+                if (record.Avatar != person.Avatar)
+                    record.Avatar = person.Avatar;
+
                 _db.SaveChanges();
             }
             return record;

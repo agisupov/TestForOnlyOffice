@@ -8,7 +8,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using TestForOnlyOffice.Model;
-using TestForOnlyOffice.Logging;
 using NLog.Extensions.Logging;
 
 namespace TestForOnlyOffice.Data

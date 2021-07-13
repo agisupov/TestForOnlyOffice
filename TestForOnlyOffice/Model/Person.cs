@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
@@ -36,6 +38,14 @@ namespace TestForOnlyOffice.Model
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
+        [JsonPropertyName("language")]
         public string Language { get; set; }
+
+        [JsonPropertyName("avatar")]
+        public byte[] Avatar { get; set; }
+
+        [NotMapped]
+        [FileExtensions(Extensions = "jpg,jpeg,png")]
+        public IFormFile AvatarFile { get; set; }
     }
 }
